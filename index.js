@@ -118,6 +118,8 @@ let scores=JSON.parse(localStorage.getItem('scores'))||{
             updateScoreElement(); 
             document.querySelector('.js-result').innerHTML='';
             document.querySelector('.js-move').innerHTML='';
+            isautoplay=false;
+            clearInterval(intervId);
         }
         function autoPlay(isautoplay)
         {
