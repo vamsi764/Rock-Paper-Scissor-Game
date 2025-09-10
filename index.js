@@ -2,6 +2,63 @@ let scores=JSON.parse(localStorage.getItem('scores'))||{
             win:0,tie:0,lose:0
         }
         updateScoreElement();
+        let isautoplay = false;
+        let intervId;
+        document.querySelector('.js-reset-score').addEventListener(
+            'click',()=>
+            {
+               resetScore();
+            }
+        );
+        document.querySelector('.js-auto-play').addEventListener(
+            'click',()=>
+            {
+                isautoplay=autoPlay(isautoplay);
+                
+            }
+        );
+        document.querySelector('body').
+        addEventListener('keydown',(event)=>
+        {
+            if(event.key==='r'||event.key==='R')
+            {
+                playGame('Rock');
+            }
+            else if(event.key==='p' || event.key==='P')
+            {
+                playGame('Paper');
+            }
+            else if(event.key==='s' || event.key==='S')
+            {
+                playGame('Scissors');
+            }
+            else if(event.key==='Backspace')
+            {
+                resetScore();
+            }
+            else if(event.key===" ")
+            {
+                isautoplay=autoPlay(isautoplay);
+            }
+        });
+        document.querySelector('.js-rock-button').addEventListener(
+            'click',()=>
+            {
+                playGame('Rock');
+            }
+        );
+        document.querySelector('.js-paper-button').addEventListener(
+            'click',()=>
+            {
+                playGame('Paper');
+            }
+        );
+        document.querySelector('.js-scissors-button').addEventListener(
+            'click',()=>
+            {
+                playGame('Scissors');
+            }
+        );
         function playGame(playerMove)
         {
             const computerMove=pickComputerMove();
@@ -52,8 +109,37 @@ let scores=JSON.parse(localStorage.getItem('scores'))||{
             <img class="move-icon" src='${computerMove.toLowerCase()}-emoji.png'>
             Computer`;
         }
-            
-        
+        function resetScore()
+        {
+             scores.win=0;
+            scores.lose=0;
+            scores.tie=0;
+            localStorage.removeItem('scores');
+            updateScoreElement(); 
+            document.querySelector('.js-result').innerHTML='';
+            document.querySelector('.js-move').innerHTML='';
+        }
+        function autoPlay(isautoplay)
+        {
+            if(!isautoplay)
+                {
+                intervId=setInterval(()=> {
+                    const playerMove=pickComputerMove();
+                    playGame(playerMove);
+                    
+                },1000);
+                isautoplay=true;
+                document.querySelector('.js-auto-play').innerText="Stop";
+                }
+                else{
+                    isautoplay=false;
+                    clearInterval(intervId);
+                    document.querySelector('.js-result').innerHTML='';
+                    document.querySelector('.js-move').innerHTML='';
+                    document.querySelector('.js-auto-play').innerText="AutoPlay";
+                }
+            return isautoplay;
+        }
         function pickComputerMove()
         {
             const picked=Math.random();
