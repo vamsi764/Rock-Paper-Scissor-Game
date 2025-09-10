@@ -8,10 +8,14 @@
     justify-content: center;
     align-items: center;
 }
+p{
+    margin: 0px;
+}
 
 .container {
     display: flex;
     flex-direction: column;
+    row-gap: 25px;
     justify-content: center;
     align-items: center;
     background-color: white;        
@@ -27,6 +31,7 @@
             font-size: 30px;
             font-weight: bold;
         }
+       
         .move-button
         {
             margin-right: 20px;
@@ -40,13 +45,13 @@
         {
             height: 60px;
         }
-        .reset-score
+        .reset-score,.auto-play
         {
             padding:5px 10px;
             background-color: rgb(203, 199, 199);
             border: none;
             border-radius: 2px;
-            margin-left: 18px;
+            margin-left: 5px;
             cursor: pointer;
         }
         .result
